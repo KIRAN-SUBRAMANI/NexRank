@@ -176,7 +176,7 @@ export default function MaditboxHero() {
                         : { opacity: 0, scale: 0.96 }
                     }
                     transition={{
-                      duration: reduceMotion ? 0 : 0.2,
+                      duration: reduceMotion ? 0 : 0,
                       ease,
                     }}
                     style={{

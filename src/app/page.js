@@ -12,14 +12,32 @@ import { getCTAData } from "@/lib/content/cta";
 import { getSiteSettings } from "@/lib/content/settings";
 
 // Lazy loaded below-the-fold components to improve initial JavaScript payload
-const TestimonialsSection = dynamic(() => import("@/components/testimonials/TestimonialsSection"), {
- loading: () => <section className="py-10 bg-bg-secondary animate-pulse min-h-[400px]" aria-label="Loading Testimonials..."/>
-});
+const TestimonialsSection = dynamic(
+  () => import("@/components/testimonials/TestimonialsSection"),
+  {
+    loading: () => (
+      <section
+        className="py-10 bg-bg-secondary animate-pulse min-h-[400px]"
+        aria-label="Loading Testimonials..."
+      />
+    ),
+  },
+);
 const FAQSection = dynamic(() => import("@/components/faq/FAQSection"), {
- loading: () => <section className="py-10 bg-surface animate-pulse min-h-[400px]" aria-label="Loading FAQs..."/>
+  loading: () => (
+    <section
+      className="py-10 bg-surface animate-pulse min-h-[400px]"
+      aria-label="Loading FAQs..."
+    />
+  ),
 });
 const CTASection = dynamic(() => import("@/components/cta/CTASection"), {
- loading: () => <section className="py-10 bg-[#D4AF37] animate-pulse min-h-[400px]" aria-label="Loading CTA..."/>
+  loading: () => (
+    <section
+      className="py-10 bg-[#D4AF37] animate-pulse min-h-[400px]"
+      aria-label="Loading CTA..."
+    />
+  ),
 });
 
 export default async function Home() {
@@ -27,7 +45,7 @@ export default async function Home() {
   const faqData = await getFAQData();
   const ctaData = await getCTAData();
   const settingsData = await getSiteSettings();
-  
+
   const featuredProjects = projectsData.slice(0, 5);
 
   return (
@@ -38,16 +56,13 @@ export default async function Home() {
 
       <WhyChooseNexRank />
 
-      <ServicesVideoShowcase />
-
       <IndustriesTransformed />
 
       <FeaturedProjects projects={featuredProjects} />
 
       <WorkingProcessSection />
-      
+
       <TestimonialsSection />
-      <FAQSection data={faqData} />
     </>
   );
 }

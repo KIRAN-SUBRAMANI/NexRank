@@ -1,11 +1,213 @@
 import Link from "next/link";
 import Image from "next/image";
-import FooterWaves from "./FooterWaves";
 import FooterCTAWrapper from "./FooterCTAWrapper";
 import BackToTop from "./BackToTop";
 import { getFooterData } from "@/lib/content/footer";
 import { getSiteSettings } from "@/lib/content/settings";
-import { EnvelopeIcon, PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  MapPin,
+  Mail,
+  Phone,
+  Globe2,
+  Sparkles,
+  TrendingUp,
+  Search,
+  MousePointer2,
+  Code2,
+  Zap,
+  ExternalLink,
+} from "lucide-react";
+
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Our Services", href: "/services" },
+  { label: "Case Studies", href: "/portfolio" },
+  { label: "Blog", href: "/blog" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact Us", href: "/contact" },
+];
+
+const serviceLinks = [
+  { label: "Search Engine Optimization", href: "/services/seo" },
+  { label: "Google Ads Management", href: "/services/google-ads" },
+  { label: "Meta Ads (Facebook & Instagram)", href: "/services/meta-ads" },
+  {
+    label: "Google Business Profile",
+    href: "/services/google-business-profile",
+  },
+  { label: "Web Development", href: "/services/web-development" },
+];
+
+const countries = [
+  "India",
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Germany",
+  "UAE",
+  "Singapore",
+  "Australia",
+];
+
+function FooterLink({ href, children }) {
+  return (
+    <Link
+      href={href}
+      className="nr-footer-link group flex w-fit items-center gap-2 py-1.5 text-[13px] text-[#A9B5AB] transition-colors duration-300 hover:text-[#D8FA65] sm:text-[14px]"
+    >
+      <span className="nr-link-arrow -ml-4 opacity-0 transition-all duration-300 group-hover:ml-0 group-hover:opacity-100">
+        <ArrowRight size={13} />
+      </span>
+      <span>{children}</span>
+    </Link>
+  );
+}
+
+function GrowthArtwork() {
+  return (
+    <div className="nr-artwork relative mx-auto w-full max-w-[540px]">
+      {/* Ambient light */}
+      <div className="nr-art-glow pointer-events-none absolute inset-[12%] rounded-full bg-[#D8FA65]/15 blur-[75px]" />
+      <div className="pointer-events-none absolute -right-5 top-5 h-36 w-36 rounded-full bg-[#C8B7FF]/15 blur-[60px]" />
+
+      {/* Main animated dashboard */}
+      <div className="nr-dashboard relative mx-auto w-[90%] max-w-[470px] overflow-hidden rounded-[26px] border border-white/20 bg-[#25342B]/95 shadow-[0_35px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FF9476]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#FFD47D]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#D8FA65]" />
+          </div>
+          <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-white/40">
+            NexRank / Growth Lab
+          </span>
+          <span className="h-2 w-2 rounded-full bg-[#D8FA65] shadow-[0_0_12px_#D8FA65]" />
+        </div>
+
+        <div className="px-6 pb-5 pt-6 sm:px-8">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#A4B9A9]">
+                Digital momentum
+              </p>
+              <h3 className="mt-3 text-[32px] font-black leading-none tracking-[-0.06em] text-white sm:text-[43px]">
+                Grow beyond<span className="text-[#D8FA65]">.</span>
+              </h3>
+            </div>
+
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D8FA65]/10 text-[#D8FA65]">
+              <TrendingUp size={23} />
+            </div>
+          </div>
+
+          <svg
+            viewBox="0 0 460 210"
+            className="mt-5 w-full overflow-visible"
+            role="img"
+            aria-label="Illustrative upward growth chart"
+          >
+            <defs>
+              <linearGradient id="nr-chart-fill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#D8FA65" stopOpacity=".25" />
+                <stop offset="100%" stopColor="#D8FA65" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="nr-chart-stroke" x1="0" x2="1">
+                <stop offset="0%" stopColor="#8BD5A4" />
+                <stop offset="55%" stopColor="#D8FA65" />
+                <stop offset="100%" stopColor="#F4FFAE" />
+              </linearGradient>
+            </defs>
+
+            {[45, 95, 145, 195].map((y) => (
+              <line
+                key={y}
+                x1="0"
+                y1={y}
+                x2="460"
+                y2={y}
+                stroke="#FFFFFF"
+                strokeOpacity=".11"
+                strokeDasharray="5 8"
+              />
+            ))}
+
+            <path
+              d="M0 190 C35 190 46 160 75 165 S120 180 145 135 S200 155 230 112 S270 135 302 88 S350 100 380 52 S425 68 460 20 L460 210 L0 210 Z"
+              fill="url(#nr-chart-fill)"
+            />
+
+            <path
+              className="nr-chart-line"
+              d="M0 190 C35 190 46 160 75 165 S120 180 145 135 S200 155 230 112 S270 135 302 88 S350 100 380 52 S425 68 460 20"
+              fill="none"
+              stroke="url(#nr-chart-stroke)"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+
+            <circle
+              className="nr-chart-point"
+              cx="460"
+              cy="20"
+              r="7"
+              fill="#D8FA65"
+              stroke="#F3FFCB"
+              strokeWidth="3"
+            />
+            <circle
+              className="nr-chart-pulse"
+              cx="460"
+              cy="20"
+              r="15"
+              fill="none"
+              stroke="#D8FA65"
+              strokeWidth="2"
+            />
+          </svg>
+
+          <div className="flex items-center justify-between border-t border-white/10 pt-4">
+            <span className="text-[11px] text-[#A9B9AC]">
+              Strategy → Execution → Growth
+            </span>
+            <ArrowUpRight size={19} className="text-[#D8FA65]" />
+          </div>
+        </div>
+      </div>
+
+      {/* Floating service badges */}
+      <div className="nr-float-one absolute -left-1 top-[8%] z-10 flex items-center gap-3 rounded-[17px] border border-white/60 bg-[#C8B7FF] px-4 py-3 text-[#342A48] shadow-[0_18px_45px_rgba(0,0,0,0.2)] sm:-left-7">
+        <div className="rounded-xl bg-white/35 p-2.5">
+          <Search size={20} />
+        </div>
+        <div>
+          <p className="text-[9px] font-black uppercase tracking-[0.15em] opacity-60">
+            Visibility
+          </p>
+          <p className="text-[13px] font-black">Get discovered</p>
+        </div>
+      </div>
+
+      <div className="nr-float-two absolute -bottom-3 -left-2 z-10 flex items-center gap-3 rounded-[17px] border border-white/50 bg-[#FF9476] px-4 py-3 text-[#492E28] shadow-[0_18px_45px_rgba(0,0,0,0.2)] sm:-left-8">
+        <div className="rounded-xl bg-white/35 p-2.5">
+          <MousePointer2 size={20} />
+        </div>
+        <div>
+          <p className="text-[9px] font-black uppercase tracking-[0.15em] opacity-60">
+            Campaigns
+          </p>
+          <p className="text-[13px] font-black">Make an impact</p>
+        </div>
+      </div>
+
+      <div className="nr-float-three absolute -right-2 bottom-[13%] z-10 flex h-16 w-16 items-center justify-center rounded-[20px] bg-[#D8FA65] text-[#19241B] shadow-[0_15px_40px_rgba(216,250,101,0.2)] sm:-right-6">
+        <ArrowUpRight size={34} strokeWidth={1.7} />
+      </div>
+    </div>
+  );
+}
 
 export default async function Footer() {
   const footerData = await getFooterData();
@@ -13,312 +215,346 @@ export default async function Footer() {
 
   if (!footerData || !siteSettings) return null;
 
-  const { logo } = siteSettings;
-
-  const clientCountries = [
-    "India", "US", "Canada", "Germany", "UK", "France",
-    "Italy", "Spain", "Ukraine", "Belgium", "Qatar",
-    "Saudi Arabia", "UAE", "Dubai", "Oman", "Singapore",
-    "Nigeria", "South Africa", "Australia"
-  ];
-
-  const quickLinks = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Our Services", href: "/services" },
-    { label: "Case Studies", href: "/portfolio" },
-    { label: "Blog", href: "/blog" },
-    { label: "Careers", href: "/careers" },
-    { label: "Contact Us", href: "/contact" }
-  ];
-
-  const serviceLinks = [
-    { label: "Search Engine Optimization", href: "/services/seo" },
-    { label: "Google Ads Management", href: "/services/google-ads" },
-    { label: "Meta Ads (FB & IG)", href: "/services/meta-ads" },
-    { label: "Google Business Profile", href: "/services/google-business-profile" },
-    { label: "Web Development", href: "/services/web-development" }
-  ];
+  const logoSrc = siteSettings.logo?.src || "/images/common/logo-badge.png";
 
   return (
-    <footer className="w-full relative bg-white">
-      
-      {/* STAGE 1: Pre-Footer CTA Section (Full-width, matching site colors) */}
+    <footer className="relative w-full overflow-hidden bg-[#151F19] text-white">
+      <style>{`
+        @keyframes nrFloatA {
+          0%,100% { transform: translateY(0) rotate(-2deg); }
+          50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        @keyframes nrFloatB {
+          0%,100% { transform: translateY(0) rotate(1deg); }
+          50% { transform: translateY(13px) rotate(-2deg); }
+        }
+        @keyframes nrFloatC {
+          0%,100% { transform: translateY(0) rotate(8deg); }
+          50% { transform: translateY(-13px) rotate(-5deg); }
+        }
+        @keyframes nrDashboard {
+          0%,100% { transform: perspective(1000px) rotateY(-7deg) rotateX(3deg) translateY(0); }
+          50% { transform: perspective(1000px) rotateY(-3deg) rotateX(1deg) translateY(-10px); }
+        }
+        @keyframes nrGlow {
+          0%,100% { opacity: .4; transform: scale(.92); }
+          50% { opacity: .85; transform: scale(1.1); }
+        }
+        @keyframes nrDraw {
+          from { stroke-dashoffset: 1000; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes nrPulse {
+          0%,100% { opacity: .25; transform: scale(.8); transform-origin: 460px 20px; }
+          50% { opacity: 1; transform: scale(1.35); transform-origin: 460px 20px; }
+        }
+        @keyframes nrReveal {
+          from { opacity: 0; transform: translateY(28px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes nrShine {
+          from { transform: translateX(-180%) skewX(-20deg); }
+          to { transform: translateX(340%) skewX(-20deg); }
+        }
+        .nr-float-one { animation: nrFloatA 5.5s ease-in-out infinite; }
+        .nr-float-two { animation: nrFloatB 6s ease-in-out infinite; }
+        .nr-float-three { animation: nrFloatC 4.8s ease-in-out infinite; }
+        .nr-dashboard { animation: nrDashboard 8s ease-in-out infinite; }
+        .nr-art-glow { animation: nrGlow 6s ease-in-out infinite; }
+        .nr-chart-line {
+          stroke-dasharray: 1000;
+          animation: nrDraw 4s cubic-bezier(.22,1,.36,1) both;
+        }
+        .nr-chart-pulse { animation: nrPulse 2.5s ease-in-out infinite; }
+        .nr-footer-heading { animation: nrReveal .9s both; }
+        .nr-cta-shine::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          width: 35%;
+          background: linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+          animation: nrShine 5s ease-in-out infinite;
+          pointer-events: none;
+        }
+        .nr-footer-link:hover .nr-link-arrow { transform: translateX(2px); }
+        @media (prefers-reduced-motion: reduce) {
+          .nr-float-one,.nr-float-two,.nr-float-three,
+          .nr-dashboard,.nr-art-glow,.nr-chart-line,
+          .nr-chart-pulse,.nr-footer-heading,.nr-cta-shine::after {
+            animation: none !important;
+          }
+          .nr-chart-line { stroke-dashoffset: 0; }
+        }
+      `}</style>
+
+      {/* Animated CTA */}
       <FooterCTAWrapper>
-        <div className="footer-ready-to-grow w-full bg-white relative z-20">
-          <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-left">
-              <span className="text-[#D4AF37] text-xs sm:text-sm font-bold tracking-widest uppercase mb-2 block">
-                READY TO GROW?
-              </span>
-              <h2 className="text-3xl md:text-4xl font-serif font-black text-[#2D3436] leading-tight max-w-xl">
-                Let&apos;s turn your digital presence into measurable growth.
+        <section className="footer-ready-to-grow relative isolate overflow-hidden border-b border-white/10 bg-[#19241C]">
+          <div className="pointer-events-none absolute inset-0 opacity-[0.16] [background-image:radial-gradient(#D8FA65_1px,transparent_1px)] [background-size:38px_38px]" />
+          <div className="pointer-events-none absolute -left-40 top-[-120px] h-[470px] w-[470px] rounded-full bg-[#D8FA65]/[0.06] blur-[110px]" />
+          <div className="pointer-events-none absolute -right-32 bottom-[-180px] h-[550px] w-[550px] rounded-full bg-[#C8B7FF]/[0.08] blur-[120px]" />
+
+          <div className="relative mx-auto grid max-w-[1480px] items-center gap-14 px-6 py-20 sm:px-10 lg:grid-cols-[1.12fr_0.88fr] lg:gap-10 lg:px-16 lg:py-28">
+            <div className="relative z-20">
+              <div className="nr-footer-heading mb-8 inline-flex items-center gap-2 rounded-full border border-[#D8FA65]/30 bg-[#D8FA65]/10 px-5 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#D8FA65] shadow-[0_0_14px_rgba(216,250,101,.7)]" />
+                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D8FA65]">
+                  Ready to grow?
+                </span>
+              </div>
+
+              <h2 className="nr-footer-heading max-w-[780px] text-[clamp(3.4rem,5.4vw,6.8rem)] font-black leading-[1.02] tracking-[-0.075em]">
+                Big ideas deserve
+                <br />
+                <span className="relative inline-block text-[#D8FA65]">
+                  bigger impact.
+                  <svg
+                    className="absolute -bottom-4 left-0 w-full"
+                    viewBox="0 0 530 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M5 16 C130 2 320 4 525 11"
+                      stroke="#FF9476"
+                      strokeWidth="7"
+                      strokeLinecap="round"
+                      opacity=".95"
+                    />
+                  </svg>
+                </span>
               </h2>
+
+              <p className="mt-10 max-w-[620px] text-[16px] leading-[1.9] text-[#B7C3B9] sm:text-[18px]">
+                From a standout website to smarter SEO and high-performing
+                campaigns, let&apos;s create a digital presence that moves your
+                business forward.
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-6">
+                <Link
+                  href="/contact"
+                  className="nr-cta-shine group relative inline-flex min-h-[62px] items-center gap-10 overflow-hidden rounded-full bg-[#D8FA65] px-8 text-[14px] font-black text-[#172219] shadow-[0_14px_40px_rgba(216,250,101,.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(216,250,101,.25)]"
+                >
+                  <span className="relative z-10">Start a Conversation</span>
+                  <ArrowUpRight
+                    size={21}
+                    className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                  />
+                </Link>
+
+                <span className="text-[13px] text-[#A5B5A8]">
+                  Let&apos;s build what&apos;s next.
+                </span>
+              </div>
+
+              <div className="mt-12 flex flex-wrap gap-3">
+                {[
+                  ["SEO", Search],
+                  ["Paid Ads", Zap],
+                  ["Web Development", Code2],
+                ].map(([name, Icon]) => (
+                  <div
+                    key={name}
+                    className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold text-[#B9C7BB] transition-colors duration-300 hover:border-[#D8FA65]/40 hover:text-[#D8FA65]"
+                  >
+                    <Icon size={14} />
+                    {name}
+                  </div>
+                ))}
+              </div>
             </div>
-            <Link 
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white rounded-full bg-[#D4AF37] hover:bg-[#C59B27] transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] hover:-translate-y-1 shrink-0"
-            >
-              Start a Conversation
-              <span className="ml-2">→</span>
-            </Link>
+
+            <div className="relative z-10 px-2 py-10 sm:px-7 lg:px-0">
+              <GrowthArtwork />
+            </div>
           </div>
-        </div>
+        </section>
       </FooterCTAWrapper>
 
-      {/* STAGE 2: Seamless Multi-Layer Gold Wave Transition */}
-      <FooterWaves />
+      {/* Main footer */}
+      <div className="relative overflow-hidden bg-[#151F19]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_0%_100%,rgba(216,250,101,.045),transparent_50%)]" />
 
-      {/* STAGE 3: Main Footer Area matching website brand theme (#2D3436 Charcoal Slate) */}
-      <div 
-        className="w-full pt-10 sm:pt-12 pb-10 relative z-10 text-white border-none overflow-hidden"
-        style={{ backgroundColor: "#2D3436" }}
-      >
-        
-        {/* Global Client Base Top Bar */}
-        <div className="w-full border-b border-white/10 pb-6 mb-10">
-          <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
-                Client Base :
-              </span>
-              {clientCountries.map((country, idx) => (
-                <span 
-                  key={idx}
-                  className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 hover:bg-[#D4AF37]/20 border border-white/10 hover:border-[#D4AF37]/40 text-white/90 hover:text-white transition-all duration-200 cursor-default"
-                >
-                  {country}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+        <div className="relative mx-auto max-w-[1480px] px-6 pb-8 pt-16 sm:px-10 lg:px-16 lg:pt-20">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.65fr_1fr_1.1fr] lg:gap-12">
+            {/* Brand */}
+            <div>
+              <Link href="/" className="inline-block">
+                <Image
+                  src={logoSrc}
+                  alt="NexRank Techno Group"
+                  width={245}
+                  height={90}
+                  className="h-auto max-h-[82px] w-auto max-w-[245px] object-contain"
+                />
+              </Link>
 
-        {/* Main 4-Column Grid */}
-        <div className="w-full max-w-[1440px] xl:max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 mb-12">
-            
-            {/* Column 1: Brand & About Us (span 4) */}
-            <div className="flex flex-col lg:col-span-4 pr-0 lg:pr-6">
-              
-              <div className="mb-4">
-                <Link href="/" className="inline-block group">
-                  <div className="relative h-10 w-[180px] rounded-xl overflow-hidden">
-                    <Image
-                      src={logo?.src || "/images/common/logo-badge.png"}
-                      alt="NexRank Techno Group"
-                      fill
-                      sizes="180px"
-                      className="object-contain object-left"
-                    />
-                  </div>
-                </Link>
-              </div>
-
-              <h4 className="text-base font-bold text-[#D4AF37] uppercase tracking-wide mb-3">
-                ABOUT US
-              </h4>
-              
-              <p className="text-white/90 leading-relaxed mb-6 text-[15px] font-normal">
-                NexRank Pvt Ltd as a professional digital marketing agency in Bangalore since 2018. We are into website, application, web portal development and Digital marketing services.
+              <p className="mt-7 max-w-[350px] text-[14px] leading-[2] text-[#A9B5AB]">
+                NexRank helps businesses build a stronger digital presence
+                through creative strategy, performance marketing, and modern web
+                development.
               </p>
-              
-              {/* Follow Us On */}
-              <div>
-                <h4 className="text-sm font-bold text-[#D4AF37] uppercase mb-4 tracking-wide">
-                  FOLLOW US ON
-                </h4>
-                <div className="flex items-center gap-3">
-                  {/* Facebook - Official Brand Color #1877F2 */}
-                  <a 
-                    href="https://facebook.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="Facebook" 
-                    title="Facebook"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1877F2] hover:bg-[#166fe5] flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
-                  >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
-                  </a>
-                  
-                  {/* X / Twitter - Official Brand Color #000000 */}
-                  <a 
-                    href="https://x.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="X (formerly Twitter)" 
-                    title="X (Twitter)"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#000000] hover:bg-[#1a1a1a] border border-white/20 flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
-                  >
-                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
-                  </a>
 
-                  {/* Instagram - Official Brand Sunset Gradient */}
-                  <a 
-                    href="https://instagram.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="Instagram" 
-                    title="Instagram"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-95 flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
+              <div className="mt-7 flex items-center gap-3">
+                {[
+                  {
+                    label: "Facebook",
+                    href: "https://facebook.com",
+                  },
+                  {
+                    label: "Instagram",
+                    href: "https://instagram.com",
+                  },
+                  {
+                    label: "LinkedIn",
+                    href: "https://linkedin.com",
+                  },
+                ].map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-[#BCC8BE] transition-all duration-300 hover:-translate-y-1 hover:border-[#D8FA65] hover:bg-[#D8FA65] hover:text-[#152119]"
                   >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
+                    <ExternalLink size={17} />
                   </a>
-
-                  {/* LinkedIn - Official Brand Color #0A66C2 */}
-                  <a 
-                    href="https://linkedin.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    aria-label="LinkedIn" 
-                    title="LinkedIn"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0A66C2] hover:bg-[#095196] flex items-center justify-center text-white shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
-                  >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                  </a>
-                </div>
+                ))}
               </div>
-
             </div>
 
-            {/* Column 2: Quick Links (span 2) */}
-            <div className="flex flex-col lg:col-span-2">
-              <h4 className="text-base font-bold text-[#D4AF37] mb-5 uppercase tracking-wide">
-                QUICK LINKS
-              </h4>
-              <ul className="space-y-3">
-                {quickLinks.map((link, i) => (
-                  <li key={i}>
-                    <Link 
-                      href={link.href} 
-                      className="text-[15px] font-medium text-white/90 hover:text-[#D4AF37] transition-colors duration-200 block"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+            {/* Explore */}
+            <div>
+              <h3 className="mb-6 flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.13em] text-[#D8FA65]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#D8FA65]" />
+                Explore
+              </h3>
+              <nav aria-label="Footer navigation">
+                {quickLinks.map((link) => (
+                  <FooterLink key={link.href} href={link.href}>
+                    {link.label}
+                  </FooterLink>
                 ))}
-              </ul>
+              </nav>
             </div>
 
-            {/* Column 3: Services (span 3) */}
-            <div className="flex flex-col lg:col-span-3">
-              <h4 className="text-base font-bold text-[#D4AF37] mb-5 uppercase tracking-wide">
-                SERVICES
-              </h4>
-              <ul className="space-y-3">
-                {serviceLinks.map((link, i) => (
-                  <li key={i}>
-                    <Link 
-                      href={link.href} 
-                      className="text-[15px] font-medium text-white/90 hover:text-[#D4AF37] transition-colors duration-200 block"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+            {/* Services */}
+            <div>
+              <h3 className="mb-6 flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.13em] text-[#D8FA65]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#D8FA65]" />
+                What we do
+              </h3>
+              <nav aria-label="Our services">
+                {serviceLinks.map((link) => (
+                  <FooterLink key={link.href} href={link.href}>
+                    {link.label}
+                  </FooterLink>
                 ))}
-              </ul>
+              </nav>
             </div>
 
-            {/* Column 4: Get Touch With Us (span 3) */}
-            <div className="flex flex-col lg:col-span-3">
-              <h4 className="text-base font-bold text-[#D4AF37] mb-5 uppercase tracking-wide">
-                GET TOUCH WITH US
-              </h4>
-              <ul className="space-y-4">
-                
-                <li className="flex items-start gap-3.5">
-                  <div className="mt-1 shrink-0 text-[#D4AF37]">
-                    <MapPinIcon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[15px] text-white/90 leading-relaxed font-normal">
-                    <strong className="text-white font-semibold block text-xs tracking-wider uppercase mb-0.5">
+            {/* Contact */}
+            <div>
+              <h3 className="mb-6 flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.13em] text-[#D8FA65]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#D8FA65]" />
+                Get in touch
+              </h3>
+
+              <div className="space-y-6">
+                <div className="flex items-start gap-3">
+                  <MapPin size={19} className="mt-1 shrink-0 text-[#D8FA65]" />
+                  <div>
+                    <p className="text-[12px] font-black uppercase tracking-[0.08em] text-white">
                       NEXRANK PRIVATE LIMITED
-                    </strong>
-                    No. 31, 2nd Floor, 9h B Main,<br />
-                    Chairman Layout, Banaswadi,<br />
-                    Bangalore, Karnataka-560043
+                    </p>
+                    <p className="mt-3 text-[13px] leading-[1.9] text-[#A9B5AB]">
+                      No. 31, 2nd Floor, 9th B Main,
+                      <br />
+                      Chairman Layout, Banaswadi,
+                      <br />
+                      Bangalore, Karnataka – 560043
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="mailto:info@nexrank.com"
+                  className="group flex items-center gap-3 text-[13px] text-[#A9B5AB] transition-colors hover:text-[#D8FA65]"
+                >
+                  <Mail size={19} className="shrink-0 text-[#D8FA65]" />
+                  info@nexrank.com
+                </a>
+
+                <a
+                  href="tel:+917760245945"
+                  className="group flex items-center gap-3 text-[13px] text-[#A9B5AB] transition-colors hover:text-[#D8FA65]"
+                >
+                  <Phone size={19} className="shrink-0 text-[#D8FA65]" />
+                  +91 77602 45945
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Global reach */}
+          <div className="mt-16 border-t border-white/10 pt-8">
+            <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
+              <div className="flex items-center gap-2 text-[12px] font-bold text-[#D8FA65]">
+                <Globe2 size={18} />
+                Global reach
+              </div>
+
+              <div className="flex flex-wrap gap-x-5 gap-y-2">
+                {countries.map((country) => (
+                  <span
+                    key={country}
+                    className="text-[11px] text-[#8F9F92] transition-colors hover:text-white"
+                  >
+                    {country}
                   </span>
-                </li>
-
-                <li className="flex items-center gap-3.5">
-                  <div className="shrink-0 text-[#D4AF37]">
-                    <EnvelopeIcon className="w-5 h-5" />
-                  </div>
-                  <a 
-                    href="mailto:info@nexrank.com" 
-                    className="text-[15px] font-medium text-white/90 hover:text-[#D4AF37] transition-colors"
-                  >
-                    info@nexrank.com
-                  </a>
-                </li>
-
-                <li className="flex items-center gap-3.5">
-                  <div className="shrink-0 text-[#D4AF37]">
-                    <PhoneIcon className="w-5 h-5" />
-                  </div>
-                  <a 
-                    href="tel:+917760245945" 
-                    className="text-[15px] font-medium text-white/90 hover:text-[#D4AF37] transition-colors"
-                  >
-                    +91-77602 45945
-                  </a>
-                </li>
-
-                <li className="flex items-center gap-3.5">
-                  <div className="shrink-0 text-[#D4AF37]">
-                    <PhoneIcon className="w-5 h-5" />
-                  </div>
-                  <a 
-                    href="tel:+917760245945" 
-                    className="text-[15px] font-medium text-white/90 hover:text-[#D4AF37] transition-colors"
-                  >
-                    +91-77602 45945
-                  </a>
-                </li>
-
-              </ul>
-            </div>
-
-          </div>
-
-          {/* Bottom Bar: Legal Links & Copyright */}
-          <div className="border-t border-white/15 pt-8 mt-10">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-[14px] font-medium text-white/90">
-              <div className="flex flex-wrap items-center gap-6 sm:gap-8">
-                <Link href="/terms-and-conditions" className="hover:text-[#D4AF37] transition-colors">
-                  Terms and Conditions
-                </Link>
-                <Link href="/privacy-policy" className="hover:text-[#D4AF37] transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/refund-policy" className="hover:text-[#D4AF37] transition-colors">
-                  Refund Policy
-                </Link>
-                <Link href="/careers" className="hover:text-[#D4AF37] transition-colors">
-                  Careers
-                </Link>
-              </div>
-
-              <div className="flex items-center gap-6">
-                <p className="text-white/80">
-                  &copy; 2026 All Rights Reserved
-                </p>
-                <BackToTop />
+                ))}
               </div>
             </div>
           </div>
-          
+
+          {/* Copyright */}
+          <div className="mt-9 flex flex-col gap-5 border-t border-white/10 pt-7 text-[11px] text-[#819184] sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © {new Date().getFullYear()} NexRank Private Limited. All rights
+              reserved.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link
+                href="/privacy-policy"
+                className="transition-colors hover:text-[#D8FA65]"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms-and-conditions"
+                className="transition-colors hover:text-[#D8FA65]"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                href="/refund-policy"
+                className="transition-colors hover:text-[#D8FA65]"
+              >
+                Refund Policy
+              </Link>
+            </div>
+
+            <span className="flex items-center gap-1.5">
+              Made for growth <Sparkles size={13} className="text-[#D8FA65]" />
+            </span>
+          </div>
         </div>
       </div>
+
+      <BackToTop />
     </footer>
   );
 }

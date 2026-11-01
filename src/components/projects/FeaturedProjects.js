@@ -1,207 +1,381 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 
-const caseStudies = [
+const PROJECTS = [
   {
-    id: 1,
-    industry: "HEALTHCARE",
-    title: "Scaling Patient Acquisition for a Regional Healthcare Clinic",
-    result: "+180% Organic Patient Leads",
-    description: "Dominated the local map pack and increased organic patient bookings within 6 months through aggressive Local SEO.",
-    image: "/images/case-studies/Healthcare SEO Services for Clinics and Hospitals.jpg",
-    link: "/case-studies/scaling-patient-acquisition-regional-healthcare-clinic"
+    id: "healthcare",
+    number: "01",
+    title: "Beyond Visibility",
+    category: "HEALTHCARE / SEO",
+    image:
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1000&q=85",
+    color: "#D8FA65",
+    slug: "healthcare",
   },
   {
-    id: 2,
-    industry: "E-COMMERCE",
-    title: "Achieving 420% ROAS for a National D2C Brand",
-    result: "420% ROAS",
-    description: "Restructured Google Shopping and Meta Ad campaigns to eliminate wasted spend and maximize profitability.",
-    image: "/images/case-studies/DIRECT TO CONSUMER.jpg",
-    link: "/case-studies/achieving-420-percent-roas-for-national-d2c-brand"
+    id: "ecommerce",
+    number: "02",
+    title: "Commerce Effect",
+    category: "E-COMMERCE / ADS",
+    image:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1000&q=85",
+    color: "#FF9476",
+    slug: "ecommerce",
   },
   {
-    id: 3,
-    industry: "WEB DEVELOPMENT",
-    title: "High-Performance Next.js Architecture & Modern Web Development",
-    result: "<1s Page Load",
-    description: "Engineered a lightning-fast headless Next.js web application that dramatically increased lead conversion rates.",
-    image: "/images/services/web dev.jpg",
-    link: "/case-studies/high-performance-nextjs-architecture-real-estate-firm"
+    id: "realestate",
+    number: "03",
+    title: "Spaces That Sell",
+    category: "REAL ESTATE / GROWTH",
+    image:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1000&q=85",
+    color: "#C8B7FF",
+    slug: "real-estate",
   },
   {
-    id: 4,
-    industry: "B2B / SAAS",
-    title: "Scaling B2B SaaS Demand Generation with Paid Ads",
-    result: "-55% Cost Per Demo",
-    description: "Leveraged advanced Lookalike audiences on Meta to slash the Cost Per Demo and build a scalable acquisition channel.",
-    image: "/images/case-studies/ads-campaign.png",
-    link: "/case-studies/scaling-b2b-saas-demos-with-meta-ads"
+    id: "technology",
+    number: "04",
+    title: "Digital by Design",
+    category: "TECHNOLOGY / WEB",
+    image:
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1000&q=85",
+    color: "#8FD3FF",
+    slug: "technology",
   },
-  {
-    id: 5,
-    industry: "LOCAL BUSINESS",
-    title: "Building Local Search Visibility and Qualified Leads",
-    result: "+140% Qualified Enquiries",
-    description: "Combined local search optimization with hyper-targeted social ads to increase foot traffic and direct phone calls.",
-    image: "/images/case-studies/Local SEO_.jpg",
-    link: "/case-studies/omnichannel-growth-regional-restaurant-chain"
-  },
-  {
-    id: 6,
-    industry: "MULTI-LOCATION BRAND",
-    title: "Cutting Cost Per Lead by 46% for a Multi-Location Brand",
-    result: "-46% CPL",
-    description: "A comprehensive campaign restructuring resulting in 134% more qualified leads and a 2.9x ROAS across locations.",
-    image: "/images/case-studies/multi brand.jpg",
-    link: "/case-studies/google-ads-multi-location-education-brand"
-  }
 ];
 
-export default function FeaturedProjects({ hideHeader = false }) {
+function ProjectCard({ project, index, active, setActive }) {
+  const reduced = useReducedMotion();
+  const selected = active === index;
+
+  const mouseX = useMotionValue(50);
+  const mouseY = useMotionValue(50);
+
+  const smoothX = useSpring(mouseX, { stiffness: 150, damping: 22 });
+  const smoothY = useSpring(mouseY, { stiffness: 150, damping: 22 });
+
+  const tiltX = useTransform(smoothY, [0, 100], [4, -4]);
+  const tiltY = useTransform(smoothX, [0, 100], [-4, 4]);
+
+  function handleMove(e) {
+    if (reduced) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    mouseX.set(((e.clientX - rect.left) / rect.width) * 100);
+    mouseY.set(((e.clientY - rect.top) / rect.height) * 100);
+  }
+
+  function handleLeave() {
+    setActive(null);
+    mouseX.set(50);
+    mouseY.set(50);
+  }
 
   return (
-    <section 
-      className="py-16 sm:py-24 lg:py-28 w-full bg-[#0A0A0A] relative overflow-hidden text-[#D4AF37]"
+    <motion.div
+      initial={
+        reduced
+          ? false
+          : {
+              opacity: 0,
+              y: index % 2 === 0 ? 65 : -65,
+              rotate: index % 2 === 0 ? -3 : 3,
+            }
+      }
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 18,
+        delay: index * 0.1,
+      }}
+      className={`relative min-w-0 ${
+        index % 2 === 0 ? "lg:translate-y-3" : "lg:-translate-y-3"
+      }`}
+      style={{ perspective: 900, zIndex: selected ? 10 : 1 }}
+      onMouseEnter={() => setActive(index)}
+      onMouseLeave={handleLeave}
+      onMouseMove={handleMove}
     >
+      {/* Hover glow */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-[8px] rounded-[26px] blur-[22px]"
+        style={{ backgroundColor: project.color }}
+        animate={{ opacity: selected ? 0.3 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
 
-      {/* LUXURY DARK AMBIENT LIGHTING */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Top subtle radial wash */}
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-white/[0.03] rounded-full blur-[130px]" />
-        {/* Soft luxury gold accent light on right */}
-        <div className="absolute top-1/3 -right-24 w-[600px] h-[600px] bg-[#D4AF37]/[0.07] rounded-full blur-[150px]" />
-        {/* Warm luxury gold ambient glow on bottom left */}
-        <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-[#D4AF37]/[0.05] rounded-full blur-[140px]" />
-      </div>
+      <motion.div
+        style={{
+          rotateX: reduced ? 0 : tiltX,
+          rotateY: reduced ? 0 : tiltY,
+        }}
+        animate={{
+          y: selected ? -8 : 0,
+          scale: selected ? 1.025 : 1,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 240,
+          damping: 22,
+        }}
+      >
+        <Link
+          href={`/case-studies/${project.slug}`}
+          className="group relative block h-[300px] overflow-hidden rounded-[20px] border border-white/20 bg-[#161616] shadow-[0_18px_45px_rgba(0,0,0,0.4)] sm:h-[325px] lg:h-[315px]"
+        >
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            className="absolute inset-0 h-full w-full object-cover"
+            animate={{
+              scale: selected ? 1.1 : 1,
+              filter: selected
+                ? "saturate(1.12) contrast(1.04)"
+                : "saturate(0.9) contrast(1.03)",
+            }}
+            transition={{ duration: 0.55 }}
+          />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* SECTION HEADER */}
-        {!hideHeader && (
-          <motion.div 
-            initial={{ opacity: 0, y: -48 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{ duration: 2.5, ease: "easeOut" }}
-            className="text-center max-w-3xl mx-auto mb-10 sm:mb-14"
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-black/10" />
+
+          {/* Animated image sheen */}
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-y-1/2 -left-1/2 w-[30%] rotate-[25deg] bg-gradient-to-r from-transparent via-white/25 to-transparent blur-lg"
+            animate={{ x: selected ? "650%" : "-100%" }}
+            transition={{ duration: 0.75 }}
+          />
+
+          <span
+            className="absolute left-4 top-4 rounded-full px-3 py-1.5 text-[10px] font-black text-black"
+            style={{ backgroundColor: project.color }}
           >
-            <div className="inline-flex items-center justify-center mb-6">
-              <span className="text-[#D4AF37] text-[11px] font-bold tracking-[0.2em] uppercase flex items-center gap-4">
-                <span className="w-10 h-[1px] bg-gradient-to-r from-transparent to-[#D4AF37]"></span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37]"></span>
-                FEATURED CASE STUDIES
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37]"></span>
-                <span className="w-10 h-[1px] bg-gradient-to-l from-transparent to-[#D4AF37]"></span>
-              </span>
-            </div>
+            {project.number}
+          </span>
 
-            <h2 className="text-[36px] sm:text-[42px] lg:text-[48px] font-extrabold text-white leading-tight mb-6 tracking-tight">
-              Real Results. <span className="text-[#D4AF37]">Proven</span> Digital Growth.
-            </h2>
+          <motion.span
+            animate={{
+              rotate: selected ? 45 : 0,
+              backgroundColor: selected ? project.color : "#FFFFFF",
+            }}
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-black"
+          >
+            <ArrowUpRight size={20} />
+          </motion.span>
 
-            <p className="text-[16px] sm:text-[18px] text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
-              Explore how NexRank helps businesses grow through strategic SEO,
-              paid advertising, local search, and high-performing digital experiences.
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <p
+              className="mb-2 text-[10px] font-black uppercase tracking-[0.14em]"
+              style={{ color: project.color }}
+            >
+              {project.category}
             </p>
-          </motion.div>
+
+            <h3 className="text-[clamp(1.4rem,2vw,2rem)] font-black leading-[1.08] tracking-[-0.055em] text-white">
+              {project.title}
+            </h3>
+
+            <motion.div
+              className="mt-3 h-[3px] rounded-full"
+              style={{ backgroundColor: project.color }}
+              animate={{ width: selected ? "100%" : "24%" }}
+              transition={{ duration: 0.4 }}
+            />
+          </div>
+        </Link>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export default function FeaturedProjects() {
+  const [active, setActive] = useState(null);
+  const [inside, setInside] = useState(false);
+  const reduced = useReducedMotion();
+
+  const pointerX = useMotionValue(-200);
+  const pointerY = useMotionValue(-200);
+
+  const smoothX = useSpring(pointerX, {
+    stiffness: 180,
+    damping: 25,
+  });
+
+  const smoothY = useSpring(pointerY, {
+    stiffness: 180,
+    damping: 25,
+  });
+
+  const activeColor = active === null ? "#D8FA65" : PROJECTS[active].color;
+
+  function movePointer(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    pointerX.set(e.clientX - rect.left);
+    pointerY.set(e.clientY - rect.top);
+  }
+
+  return (
+    <section
+      onMouseMove={movePointer}
+      onMouseEnter={() => setInside(true)}
+      onMouseLeave={() => {
+        setInside(false);
+        setActive(null);
+      }}
+      className="relative isolate overflow-hidden bg-[#050505] py-10 text-white sm:py-12"
+      style={{
+        cursor: inside && !reduced ? "none" : "auto",
+      }}
+    >
+      {/* Black background with subtle dot matrix */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.14]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.28) 1px, transparent 1px)",
+            backgroundSize: "26px 26px",
+          }}
+        />
+
+        {/* Mouse-following spotlight */}
+        {!reduced && (
+          <motion.div
+            className="absolute left-0 top-0 h-[400px] w-[400px] rounded-full blur-[75px]"
+            style={{
+              x: smoothX,
+              y: smoothY,
+              translateX: "-50%",
+              translateY: "-50%",
+              backgroundColor: activeColor,
+              opacity: 0.13,
+            }}
+          />
         )}
 
-        {/* GRID LAYOUT */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.1 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 w-full"
-        >
-          {caseStudies.map((study) => (
-            <Link 
-              key={study.id} 
-              href={study.link}
-              className="relative block w-full h-[280px] rounded-[24px] overflow-hidden group/card shadow-[0_12px_35px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)] border border-white/10 hover:border-white/30 transition-all duration-500 hover:-translate-y-2 cursor-pointer"
-            >
-                
-                {/* FULL BACKGROUND IMAGE */}
-                <Image
-                  src={study.image}
-                  alt={study.title}
-                  fill
-                  className="object-cover transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] brightness-[1.08] contrast-[1.04] saturate-[1.1] group-hover/card:scale-110 group-hover/card:brightness-[1.12]"
-                />
+        {/* Animated light trails */}
+        {!reduced && (
+          <>
+            <motion.div
+              className="absolute -left-[35%] top-[25%] h-px w-[65%] rotate-[-12deg] bg-gradient-to-r from-transparent via-[#D8FA65]/35 to-transparent"
+              animate={{ x: ["0%", "240%"] }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
 
-                {/* Animated 'X' Overlay Background */}
-                <div 
-                  className="absolute inset-0 pointer-events-none z-[2] transition-transform duration-[1.2s] ease-[cubic-bezier(0.2,0.8,0.2,1)] -translate-x-[40%] group-hover/card:translate-x-[40%]"
-                >
-                  <div className="absolute top-[-50%] bottom-[-50%] left-1/2 w-[45%] -translate-x-1/2 rotate-[35deg] bg-[rgba(255,255,255,0.15)]" />
-                  <div className="absolute top-[-50%] bottom-[-50%] left-1/2 w-[45%] -translate-x-1/2 -rotate-[35deg] bg-[rgba(255,255,255,0.15)]" />
-                </div>
-
-                {/* DEFAULT OVERLAY (Subtle soft tint to preserve bright image colors) */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none transition-opacity duration-500 group-hover/card:opacity-0 z-[3]" />
-
-                {/* MOBILE VISIBLE TITLE (Hidden on Desktop 'lg:hidden') */}
-                <div className="lg:hidden absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-[5]">
-                  <span className="text-[#D4AF37] text-[10px] font-bold tracking-wider uppercase block mb-1">
-                    {study.industry}
-                  </span>
-                  <h3 className="text-white text-[15px] font-bold leading-snug line-clamp-2">
-                    {study.title}
-                  </h3>
-                </div>
-
-                {/* DESKTOP HOVER OVERLAY (Displays content on hover with clean neutral backdrop) */}
-                <div className="hidden lg:flex absolute inset-0 bg-black/60 backdrop-blur-md flex-col justify-center items-center p-6 md:p-8 transition-all duration-500 opacity-0 group-hover/card:opacity-100 text-center z-10">
-                  
-                  <span className="text-[#D4AF37] text-[11px] font-bold tracking-[0.2em] mb-3 flex items-center justify-center gap-2 transform translate-y-6 group-hover/card:translate-y-0 transition-transform duration-500 ease-out">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
-                    {study.industry}
-                  </span>
-                  
-                  <h3 className="text-[20px] sm:text-[22px] font-bold text-white leading-[1.3] mb-8 transform translate-y-6 group-hover/card:translate-y-0 transition-transform duration-500 delay-75 ease-out">
-                    {study.title}
-                  </h3>
-                  
-                  <span className="inline-flex items-center justify-center gap-2 text-white font-bold text-[14px] px-6 py-3 rounded-full bg-[#D4AF37] hover:bg-white hover:text-black transition-all duration-300 transform translate-y-6 group-hover/card:translate-y-0 transition-transform duration-500 delay-150 ease-out shadow-lg shadow-black/20">
-                    View Case Study 
-                    <svg fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  </span>
-                </div>
-
-                {/* RESULT BADGE (Always visible, clean neutral styling) */}
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-white/20 rounded-[10px] px-3.5 py-1.5 shadow-[0_4px_15px_rgba(0,0,0,0.25)] z-20 transition-all duration-500 group-hover/card:bg-white group-hover/card:border-white">
-                  <span className="block font-extrabold text-[12px] tracking-wide uppercase text-white group-hover/card:text-black">
-                    {study.result}
-                  </span>
-                </div>
-
-            </Link>
-          ))}
-        </motion.div>
-
-
-
+            <motion.div
+              className="absolute -right-[35%] bottom-[25%] h-px w-[65%] rotate-[12deg] bg-gradient-to-r from-transparent via-[#8FD3FF]/30 to-transparent"
+              animate={{ x: ["0%", "-240%"] }}
+              transition={{
+                duration: 11,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          </>
+        )}
       </div>
 
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation: none !important;
-            transition: none !important;
-          }
-        }
-      `}</style>
+      {/* Custom mouse cursor */}
+      {!reduced && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 top-0 z-50 hidden h-14 w-14 items-center justify-center rounded-full border-2 mix-blend-screen lg:flex"
+          style={{
+            x: smoothX,
+            y: smoothY,
+            translateX: "-50%",
+            translateY: "-50%",
+            borderColor: activeColor,
+            boxShadow: `0 0 20px ${activeColor}55`,
+          }}
+          animate={{
+            opacity: inside ? 1 : 0,
+            scale: active === null ? 0.75 : 1.2,
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          <span
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: activeColor }}
+          />
+        </motion.div>
+      )}
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8">
+        {/* Heading */}
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="mb-2 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#D8FA65]">
+              <Sparkles size={14} />
+              NEXRANK / SELECTED WORK
+            </p>
+
+            <h2 className="text-[clamp(2.2rem,4vw,3.9rem)] font-black leading-[1.04] tracking-[-0.065em]">
+              Built to <span className="text-[#D8FA65]">stand apart.</span>
+            </h2>
+          </motion.div>
+
+          <p className="max-w-[280px] text-xs leading-relaxed text-white/65">
+            Creative ideas, strategic thinking, and digital experiences designed
+            to make an impression.
+          </p>
+        </div>
+
+        {/* Four staggered projects */}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          {PROJECTS.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              active={active}
+              setActive={setActive}
+            />
+          ))}
+        </div>
+
+        {/* Compact footer — no filmstrip */}
+        <div className="mt-9 flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-5">
+          <p className="text-[10px] text-white/45">
+            Illustrative concepts — replace with verified client work.
+          </p>
+
+          <Link
+            href="/case-studies"
+            className="group inline-flex items-center gap-2 text-xs font-black text-[#D8FA65]"
+          >
+            Explore All Work
+            <ArrowUpRight
+              size={17}
+              className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+            />
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }
