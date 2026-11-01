@@ -57,7 +57,7 @@ export default function MaditboxHero() {
 
     const interval = setInterval(() => {
       setActive((current) => (current + 1) % scenes.length);
-    }, 4500);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [reduceMotion]);
@@ -65,12 +65,22 @@ export default function MaditboxHero() {
   const scene = scenes[active];
 
   const reveal = (delay = 0) => ({
-    initial: reduceMotion ? false : { opacity: 0, y: 45 },
-    animate: { opacity: 1, y: 0 },
+    initial: reduceMotion
+      ? false
+      : {
+          opacity: 0,
+          y: 55,
+          filter: "blur(6px)",
+        },
+    animate: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+    },
     transition: {
-      duration: reduceMotion ? 0 : 0.85,
+      duration: reduceMotion ? 0 : 0.9,
       delay: reduceMotion ? 0 : delay,
-      ease,
+      ease: [0.22, 1, 0.36, 1],
     },
   });
 
@@ -80,38 +90,32 @@ export default function MaditboxHero() {
       <div className="relative z-10 mx-auto max-w-[1600px] px-5 pb-8 pt-8 sm:px-10 lg:px-16 lg:pb-10 lg:pt-10">
         {" "}
         {/* Small introduction */}
-        <motion.div {...reveal(0)} className="mb-9 flex items-center gap-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#9CCB35]" />
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#526071]">
-            Digital marketing built for what's next
-          </span>
-        </motion.div>
         <div className="grid items-center gap-12 lg:grid-cols-[1.03fr_0.97fr] lg:gap-10">
           {/* LEFT SIDE */}
           <div className="relative z-10">
-            <h1 className="text-[clamp(3.2rem,5.1vw,6rem)] font-bold leading-[1.04] tracking-[-0.075em]">
+            <h1 className="text-[clamp(3rem,4.7vw,5.5rem)] font-bold leading-[1.07] tracking-[-0.065em]">
               <span className="block overflow-hidden pb-2">
                 <motion.span {...reveal(0.1)} className="block">
-                  Make an impact.
+                  Get Found.
                 </motion.span>
               </span>
 
               <span className="block overflow-hidden pb-2">
-                <motion.span {...reveal(0.25)} className="block text-[#87B52C]">
-                  Not just an
+                <motion.span {...reveal(0.3)} className="block text-[#97c933]">
+                  Get Leads.
                 </motion.span>
               </span>
 
               <span className="block overflow-hidden pb-2">
-                <motion.span {...reveal(0.4)} className="block">
-                  impression.
+                <motion.span {...reveal(0.5)} className="block">
+                  Grow Faster.
                 </motion.span>
               </span>
             </h1>
 
             <motion.div
               {...reveal(0.68)}
-              className="mt-9 flex flex-wrap items-center gap-4"
+              className="mt-5 flex flex-wrap items-center gap-3"
             >
               <Link
                 href="/contact"
@@ -172,7 +176,7 @@ export default function MaditboxHero() {
                         : { opacity: 0, scale: 0.96 }
                     }
                     transition={{
-                      duration: reduceMotion ? 0 : 0.6,
+                      duration: reduceMotion ? 0 : 0.2,
                       ease,
                     }}
                     style={{
@@ -225,7 +229,7 @@ export default function MaditboxHero() {
                               initial={reduceMotion ? false : { y: "110%" }}
                               animate={{ y: 0 }}
                               transition={{
-                                duration: reduceMotion ? 0 : 0.7,
+                                duration: reduceMotion ? 0 : 0.4,
                                 delay: reduceMotion ? 0 : 0.1 + index * 0.13,
                                 ease,
                               }}
@@ -313,7 +317,7 @@ export default function MaditboxHero() {
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{
-                          duration: 4.5,
+                          duration: 3,
                           ease: "linear",
                         }}
                       />
