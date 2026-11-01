@@ -1,0 +1,93 @@
+export const testimonialsData = {
+  section: {
+    badge: "CLIENT SUCCESS STORIES",
+    heading: "Trusted by <span class='text-[#D4AF37]'>Businesses</span> Across Industries",
+    description: "Discover how NexRank has helped businesses improve their online presence, generate qualified leads, and achieve measurable digital growth through tailored marketing strategies.",
+    ratingLabel: "4.9/5 Average Client Rating",
+    clientsCountLabel: "100+ Happy Clients"
+  },
+  stats: [
+    { label: "Happy Clients", value: 100, suffix: "+" },
+    { label: "Projects Completed", value: 250, suffix: "+" },
+    { label: "Average Rating", value: 4.9, suffix: "★", decimals: 1 },
+    { label: "Client Retention", value: 95, suffix: "%" }
+  ],
+  testimonials: [
+    {
+      id: "test-1",
+      clientName: "Sarah Jenkins",
+      designation: "Chief Marketing Officer",
+      company: "Apex Health Group",
+      industry: "Healthcare",
+      location: "Chicago, IL",
+      photo: "/images/team/Sarah Jenkins.avif",
+      companyLogo: "/images/logos/apex-health.png",
+      rating: 5,
+      review: "NexRank completely transformed our digital strategy. Their enterprise approach to Local SEO delivered results beyond our highest expectations. We've seen an immense increase in patient bookings directly from organic search.",
+      services: ["Local SEO", "Google Business Profile"],
+      projectDuration: "6 Months",
+      results: "+180% Organic Leads",
+      verified: true,
+      featured: true,
+      date: "2024-05-12",
+      status: "approved"
+    },
+    {
+      id: "test-2",
+      clientName: "David Chen",
+      designation: "CEO & Founder",
+      company: "Elevate Apparel",
+      industry: "E-commerce",
+      location: "New York, NY",
+      photo: "/images/team/David Chen.avif",
+      companyLogo: "/images/logos/elevate.png",
+      rating: 5,
+      review: "Professional, extremely data-driven, and highly effective. They restructured our entire Google Ads account and eliminated thousands in wasted spend. They are a true partner in our growth.",
+      services: ["Google Ads", "Meta Ads"],
+      projectDuration: "12 Months",
+      results: "4.2x ROAS",
+      verified: true,
+      featured: true,
+      date: "2024-03-28",
+      status: "approved"
+    },
+    {
+      id: "test-3",
+      clientName: "Elena Rodriguez",
+      designation: "VP of Digital",
+      company: "Prime Properties",
+      industry: "Real Estate",
+      location: "Miami, FL",
+      photo: "/images/team/Elena Rodriguez.webp",
+      companyLogo: "/images/logos/prime-properties.png",
+      rating: 5,
+      review: "The custom Next.js web architecture they built for us is lightning fast. We were losing mobile leads due to slow load times, but NexRank fixed that entirely. Our lead conversion rate jumped rapidly.",
+      services: ["Web Development", "UI/UX Design"],
+      projectDuration: "4 Months",
+      results: "+85% Conversion Rate",
+      verified: true,
+      featured: true,
+      date: "2024-06-15",
+      status: "approved"
+    },
+    {
+      id: "test-4",
+      clientName: "Marcus Thorne",
+      designation: "Director of Demand Gen",
+      company: "CloudSync Pro",
+      industry: "B2B SaaS",
+      location: "San Francisco, CA",
+      photo: "/images/team/Marcus Thorne.webp",
+      companyLogo: "/images/logos/cloudsync.png",
+      rating: 4.5,
+      review: "Their Meta Ads strategy for B2B was a game-changer. We bypassed expensive LinkedIn CPCs and found high-quality leads on Facebook. The volume of qualified demo requests has been incredible.",
+      services: ["Meta Ads Strategy", "Lead Gen"],
+      projectDuration: "Ongoing",
+      results: "300+ Demo Requests",
+      verified: true,
+      featured: true,
+      date: "2024-07-02",
+      status: "approved"
+    }
+  ]
+};
